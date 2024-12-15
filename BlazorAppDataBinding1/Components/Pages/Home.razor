@@ -1,0 +1,50 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+<PageTitle>Sign Up</PageTitle>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign Up Page</title>
+	<link rel="stylesheet" href="homeStyleSheet.css">
+</head>
+
+<div class="circle">
+	<img src="img/image-removebg-preview.png" width="90" height="90">
+</div>
+
+<div class="flex-container">
+	<h1>Sign Up</h1>
+
+	<EditForm Model="@user" OnValidSubmit="Submitting">
+		<DataAnnotationsValidator/>
+		<ValidationSummary/>
+
+		<div>
+			<label for="username">Username</label>
+			<input type="text" placeholder="Got a cool idea for your user name?" pattern="^[A-Za-z]{1,}$" title="Your username can include only letters!" required @bind-value="user.Username" class="form-control"/>
+		</div>
+
+		<div>
+			<label for="email">Email</label>
+			<input type="email" placeholder="Enter your email" required @bind-value="user.Email" class="form-control"/>
+		</div>
+
+		<div>
+			<label for="password">Password</label>
+			<input type="password" placeholder="Choose a password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" title="Your password must include at least 8 characters, an uppercase letter, a lowercase letter and a number!" required @bind-value ="user.Password" class="form-control"/>
+		</div>
+
+		<button type="submit">Submit</button>
+	</EditForm>
+</div>
+
+@code{
+	private User user = new User();
+
+	private void Submitting()
+	{
+		Console.WriteLine($"New user has been created! Username: {user.Username}, Email: {user.Email}, Password: {user.Password}.");
+		Navigation.NavigateTo("/success");
+	}
+}
